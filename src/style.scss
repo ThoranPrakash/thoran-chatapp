@@ -334,8 +334,12 @@
                         color: #667781;
                         text-align: right;
                         align-self: flex-end;
-                        min-width: 40px;
                     }
+                        .singleTick{
+                            svg{
+                                color: #a2a2a2;
+                            }
+                        }
                     svg{
                         display: flex;
                         align-self: flex-end;

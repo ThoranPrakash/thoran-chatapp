@@ -8,7 +8,6 @@ import { v4 as uuid } from 'uuid'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { updateProfile } from 'firebase/auth'
 
 
 const Input = () => {
@@ -69,15 +68,17 @@ const Input = () => {
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
-        status: 'unread',
+        status: 'read',
+        senderId: currentUser.uid,
       },
       [data.chatId + ".date"]: formatAMPM(new Date()),
     });
-
+    
     await updateDoc(doc(db, "userChats", data.user.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
         status: 'unread',
+        senderId: data.user.uid,
       },
       [data.chatId + ".date"]: formatAMPM(new Date()),
     });
