@@ -4,31 +4,26 @@ import Message from '../components/Message'
 import { ChatContext } from '../context/ChatContext';
 import { db } from '../firebase';
 
-const Messages = () => { 
+const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
-  // const messageRef = useRef(null);
-  // useEffect(() => {
-  //   if (messageRef.current) {
-  //     messageRef.current.scrollIntoView(
-  //       {
-  //         behavior: 'smooth',
-  //         block: 'end',
-  //         inline: 'nearest'
-  //       })
-  //   }
-  // })
-  useEffect(()=>{
-    const unsub = onSnapshot(doc(db,"chats",data.chatId), (doc)=>{
+  const messageRef = useRef(null);
+  
+  useEffect(() => {
+    messageRef?.current.scrollIntoView();
+  }, [messages])
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages)
     })
 
-    return ()=>{
+    return () => {
       unsub();
     }
-  },[data.chatId])
+  }, [data.chatId])
   // useEffect(() => {
-    
+
   //   const getChats = () => {
   //     const unsub = onSnapshot(doc(db, "userChats", data.chatId), (doc) => {
   //       setChats(doc.data());
@@ -40,13 +35,16 @@ const Messages = () => {
   //   currentUser.uid && getChats();
   // },[data.chatId]);
   return (
-    <div className="messages">
-      {
-        messages.map((m)=>{
-          return <Message message={m} key={m.id}/>
-        })
-      }
-    </div>
+    <>
+      <div className="messages">
+        {
+          messages.map((m) => {
+            return <Message message={m} key={m.id} />
+          })
+        }
+      </div>
+      <div ref={messageRef}></div>
+    </>
   )
 }
 

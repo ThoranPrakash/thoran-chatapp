@@ -113,7 +113,7 @@
         background-color: #f0f2f5;
         min-width: 250px;
         @include tablet{
-            min-width: 200px;
+            min-width: 250px;
         }
         .navbar {
             display: flex;
@@ -311,15 +311,14 @@
             background-size:contain;
             padding: 10px;
             height: calc(100% - 150px);
-            overflow: scroll;
+            overflow-y: scroll;
             .message{
                 display: flex;
                 gap: 10px;
                 .messageContent{
                     padding: 5px;
                     margin: 5px;
-                    width: max-content;
-                    height: 20px;
+                    height: fit-content;
                     background-color: white;
                     color: black;
                     font-size: 14px;
@@ -390,6 +389,7 @@
                 background-color: white;
                 border-radius: 5px;
                 font-size: 16px;
+                padding-left: 10px;
 
                 &::placeholder{
                     font-size: 14px;

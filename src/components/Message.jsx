@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { BiCheckDouble } from 'react-icons/bi';
 import { GoCheck } from 'react-icons/go';
-
 
 const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
@@ -18,13 +17,17 @@ const Message = ({message}) => {
     return strTime;
   }
   let date = formatAMPM(new Date());
-    // console.log(chat[1].lastMessage.text+ ':'+ chat[1].lastMessage.status);
-    // setMsgStatus(chat[1].lastMessage.status);
+  const messageRef = useRef(null);
+
+  useEffect(() => {
+      messageRef?.current.scrollIntoView();
+  },[message]);
   return (
     <div className={`message ${message.senderId === currentUser.uid && `owner`}`}>
       <div className="messageContent">
-          <p>{message.text}</p><span>{(date.substring(4,2) - message.date.substring(4,2)) === 0 ? 'just now' : message.date}</span>{message.senderId === currentUser.uid && <><span hidden className='singleTick'><GoCheck viewBox="-10 -7 24 24"/></span><span className='doubleTick'><BiCheckDouble viewBox='0 -3 24 24'/></span></>}
+          <p>{message.text}</p><span>{(date.substring(4,2) - message.date.substring(4,2)) === 0 ? 'just now' : message.date}</span>{message.senderId === currentUser.uid && <>{message.status === 'unread' && <span  className='singleTick'><GoCheck viewBox="-10 -7 24 24"/></span>}{(message.status === 'read' || !message.status) && <span className='doubleTick'><BiCheckDouble viewBox='0 -3 24 24'/></span>}</>}
       </div>
+      <div ref={messageRef}/>
     </div>
   )
 }

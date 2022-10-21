@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import dp from '../Images/thoran.jpg'
+import React, { useContext } from 'react';
 import add from '../Images/add.png';
 import cam from '../Images/cam.png';
 import Messages from './Messages';
 import Input from './Input';
 import { ChatContext } from '../context/ChatContext';
+
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
@@ -21,7 +21,7 @@ const Chat = () => {
           <img src={cam} alt="" />
         </div>
       </div>
-      <Messages />
+        <Messages />
       <Input />
     </div>
   )
